@@ -6,7 +6,7 @@ type CardViewProps = {
   onEdit(card: Card): void;
 }
 
-const CardView: React.FC<CardViewProps> = ({ card, onEdit }) => {
+const CardView = ({ card, onEdit }: CardViewProps) => {
 
 
   return (
