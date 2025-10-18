@@ -76,12 +76,12 @@ const SEED_BOARD: Board = {
 //reducers that ill need:
 
 function boardReducer(state: Board, action: Action): Board {
-  
-  switch (action.type){
+
+  switch (action.type) {
     case "ADD_CARD": {
-      const { columnById, title} = action;
+      const { columnById, title } = action;
       const column = state.columnById[columnById];
-      if(!column) return state;
+      if (!column) return state;
 
       const newId = makeId("card");
       const newCard: Card = {
@@ -90,23 +90,74 @@ function boardReducer(state: Board, action: Action): Board {
         createdAt: Date.now(),
       };
       return {
-        ...state, cards: { ...state.cards, [newId]: newCard }, 
-        columnById: { ...state.columnById, [columnById]: { ...column, cardIds: [...column.cardIds, newId]},
-      }, 
+        ...state, cards: { ...state.cards, [newId]: newCard },
+        columnById: {
+          ...state.columnById, [columnById]: { ...column, cardIds: [...column.cardIds, newId] },
+        },
       };
     }
 
     case "UPDATE_CARD": {
-      const {cardId, patch} = action;
+      const { cardId, patch } = action;
       const card = state.cards[cardId];
-      if(!card) return state;
+      if (!card) return state;
       return {
-        ...state, cards: {...state.cards, [cardId]:{ ...card, ...patch } },
+        ...state, cards: { ...state.cards, [cardId]: { ...card, ...patch } },
       };
     }
     case "DELETE_CARD": {
-      const {cardId, columnById} = action;
+      const { cardId, columnById } = action;
+      const column = state.columnById[columnById];
+      if (!column) return state;
+      if (!state.cards[cardId]) return state;
+
+      const { [cardId]: _removed, ...rest } = state.cards;
+      return {
+        ...state, cards: rest, columnById: {
+          ...state.columnById, [columnById]: {
+            ...column, cardIds: column.cardIds.filter((id) => id !== cardId),
+
+          },
+        },
+      };
     }
+    case "RENAME_COLUMN": {
+      const { columnById, name } = action;
+      const column = state.columnById[columnById];
+      if (!column) return state;
+      return {
+        ...state,
+        columnById: { ...state.columnById, [columnById]: { ...column, name } },
+      };
+    }
+    case "ADD_COLUMN": {
+      const id = makeId("col");
+      const column: Column = { id, name: action.name, cardIds: [] };
+      return {
+        ...state,
+        columnOrder: [...state.columnOrder, id], columnById: { ...state.columnById, [id]: column },
+      };
+    }
+    case "MOVE_CARD": {
+      const { cardId, from, to, index } = action;
+      const fromCol = state.columnById[from];
+      const toCol = state.columnById[to];
+      if (!fromCol || !toCol) return state;
+
+      const fromIds = fromCol.cardIds.filter((id) => id !== cardId);//this is mainly to just remove the current card from the current spot
+      const toIds = [...toCol.cardIds.filter((id) => id !== cardId)];//this is for inserting at index 
+      const clamped = Math.max(0, Math.min(index, toIds.length));
+      toIds.splice(clamped, 0, cardId);
+
+      return {
+        ...state,
+        columnById: {
+          ...state.columnById, [from]: { ...fromCol, cardIds: fromIds }, [to]: { ...toCol, cardIds: toIds },
+        },
+      };
+    }
+    default: 
+    return state;
   }
 }
 
@@ -116,8 +167,8 @@ const App: React.FC = () => {
 
   return (
     <>
-    <BoardView dispatch={}/>
-      
+      <BoardView dispatch={ } />
+
     </>
   )
 }
