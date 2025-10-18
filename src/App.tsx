@@ -168,10 +168,17 @@ const App = () => {
 
   return (
     <>
-    <h1 className="text-xl font-bold">{board.name}</h1>
-    <button onClick={()=>dispatch({ type: "ADD_COLUMN", name: "New Column"})}>New Column</button>
-      <BoardView dispatch={dispatch} board={board} />
+    <header className="flex items-center justify-between p-4 bg-red-100">
+        <h1 className="text-xl font-bold">{board.name}</h1>
+        <button
+          className="rounded-md border px-3 py-1 text-sm bg-green-500 bg-opacity-0"
+          onClick={() => dispatch({ type: "ADD_COLUMN", name: window.prompt('What is the name of the new column?') || "new column"})}
+        >
+          + Column
+        </button>
+      </header>
 
+      <BoardView board={board} dispatch={dispatch} />
     </>
   )
 }
