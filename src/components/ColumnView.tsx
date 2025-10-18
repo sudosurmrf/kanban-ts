@@ -39,6 +39,13 @@ const ColumnView = ({ column, cards, dispatch}: ColumnViewProps) => {
     dispatch({ type: "UPDATE_CARD", cardId: card.id, patch: { title: next}});
   }
 
+  const moveCard = (cardId: ID<"card">, direction: -1 | 1) => {
+    const index = column.cardIds.indexOf(cardId);
+    const nextIndex = index + direction;
+    if(index < 0 || nextIndex < 0 || nextIndex >= column.cardIds.length) return;
+    dispatch({ type: "MOVE_CARD", cardId, from: column.id, to: column.id, index: nextIndex});
+  }
+
   return (
     <>
     <div className="flex flex-col gap-2">
@@ -46,6 +53,10 @@ const ColumnView = ({ column, cards, dispatch}: ColumnViewProps) => {
         orderedCards.map((card) => (
           <div key={card.id} className="group relative">
             <CardView card={card} onEdit={editCard} />
+            <div className="absolute right-2 top-2 hidden gap-1 group-hover: flex">
+              <button onClick={()=>moveCard(card.id, -1)} title="Move Up">Move Up</button>
+              <button onClick={() => moveCard(card.id, 1)} title="Move Down">Move Down</button>
+            </div>
             </div>
         ))
       )}
