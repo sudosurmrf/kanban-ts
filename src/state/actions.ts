@@ -1,5 +1,5 @@
-import { ID } from "../types/ids";
-import { Label } from "../types/board";
+import type { ID } from "../types/ids";
+import type { Label } from "../types/board";
 
 export type Action = 
 | { type: "ADD_CARD"; columnById: ID<"col">; title: string}
