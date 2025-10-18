@@ -20,6 +20,8 @@ export interface Column {
 export interface Board {
   id: ID<"board">;
   name: string;
-  columns: Column[];
+  columnOrder: ID<"col">[]; //will be faster for custom ordering 
+  columnById: Record<ID<"col">, Column>; //will be better later on for lookup
   cards: Record<ID<"card">, Card>;
 }
+
