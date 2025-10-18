@@ -3,6 +3,7 @@ import { useReducer } from "react"
 import type { Board, Card, Column } from "./types/board"
 import { makeId, type ID } from "./types/ids"
 import type { Action } from "./state/actions"
+import './index.css';
 
 
 //fake data for now: 
