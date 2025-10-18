@@ -1,4 +1,5 @@
 import type { Card } from "../types/board";
+import React from "react";
 
 type CardViewProps = {
   card: Card;
@@ -7,7 +8,7 @@ type CardViewProps = {
 
 const CardView: React.FC<CardViewProps> = ({ card, onEdit }) => {
 
-  
+
   return (
     <>
     <div className="rounded-lg p-3 shadow">
@@ -19,4 +20,6 @@ const CardView: React.FC<CardViewProps> = ({ card, onEdit }) => {
   )
 }
 
-export default CardView;
+export default React.memo(CardView); /**shallow comparison only though
+could make deeper if we use a custom comparison function.
+ */
