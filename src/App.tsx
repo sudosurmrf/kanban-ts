@@ -162,12 +162,14 @@ function boardReducer(state: Board, action: Action): Board {
 }
 
 
-const App: React.FC = () => {
-
+const App = () => {
+  const [board, dispatch] = useReducer(boardReducer, SEED_BOARD);
 
   return (
     <>
-      <BoardView dispatch={ } />
+    <h1 className="text-xl font-bold">{board.name}</h1>
+    <button onClick={()=>dispatch({ type: "ADD_COLUMN", name: "New Column"})}>New Column</button>
+      <BoardView dispatch={dispatch} board={board} />
 
     </>
   )
