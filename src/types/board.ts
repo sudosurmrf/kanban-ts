@@ -14,14 +14,14 @@ export interface Card {
 export interface Column {
   id: ID<"col">;
   name: string;
-  cardIds: ID<"card">[];
+  cardIds: ReadonlyArray<ID<"card">>;
 }
 
 export interface Board {
   id: ID<"board">;
   name: string;
-  columnOrder: ID<"col">[]; //will be faster for custom ordering 
-  columnById: Record<ID<"col">, Column>; //will be better later on for lookup
+  columnOrder: ReadonlyArray<ID<"col">>; 
+  columnById: Record<ID<"col">, Column>; 
   cards: Record<ID<"card">, Card>;
 }
 
