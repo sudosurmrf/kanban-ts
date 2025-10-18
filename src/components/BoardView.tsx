@@ -1,5 +1,6 @@
 import ColumnView from "./ColumnView";
 import type { Board, Card, Column } from "../types/board";
+import type { ID } from "../types/ids";
 import type { Action } from "../state/actions";
 import React, { useMemo } from "react";
 
@@ -30,7 +31,13 @@ const BoardView = ({board, dispatch}: BoardViewProps) => {
 
   return (
     <>
-    
+    <div className="flex gap-4 overflow-auto p-4">
+      {columnsWithCards && (
+        columnsWithCards.map(({ column, cards}) => (
+          <ColumnView key={column.id} column={column} cards={cards} dispatch={dispatch} />
+        ))
+      )}
+    </div>
     </>
   )
 }
