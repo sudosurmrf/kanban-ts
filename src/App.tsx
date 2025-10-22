@@ -64,7 +64,7 @@ const colDone: Column = {
 
 const SEED_BOARD: Board = {
   id: "board_demo",
-  name: "Typed Kanban (Demo)",
+  name: "Typed Kanban",
   columnOrder: ["col_backlog", "col_inprogress", "col_done"],
   columnById: {
     col_backlog: colBacklog,

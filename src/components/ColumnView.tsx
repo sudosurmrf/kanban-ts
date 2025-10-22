@@ -107,7 +107,6 @@ const ColumnView = ({ column, cards, dispatch }: ColumnViewProps) => {
         {orderedCards.map((card) => (
           <div key={card.id} className="group relative">
             <CardView card={card} onEdit={editCard} />
-            {/* FIX: no space after variant; should be group-hover:flex */}
             <div className="absolute right-2 top-2 hidden gap-1 group-hover:flex">
               <button className="rounded-md border px-1 text-xs" onClick={() => moveCard(card.id, -1)} title="Move up">
                 ↑

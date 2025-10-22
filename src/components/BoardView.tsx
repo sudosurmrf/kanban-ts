@@ -29,6 +29,7 @@ const BoardView = ({board, dispatch}: BoardViewProps) => {
    .filter(isDefined);
   }, [board.cards, board.columnOrder, board.columnById])
 
+
   return (
     <>
     <div className="flex gap-4 overflow-auto p-4">
